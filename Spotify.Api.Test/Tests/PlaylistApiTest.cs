@@ -6,6 +6,7 @@ namespace Spotify.Api.Test.Tests
 {
     public class PlaylistApiTest
     {
+        private string _accessToken = "BQDv4BY4LrYvgCVaDdtQhQ-1aX-kJcQfUAopPUBP9BrcGq0vyIgorRkcAvoaq8scGBjxey8zwQVE699XKrHWvzKaHWXiU3yAOWuE4pz_qeaMx895x8XyJziNucbVd7U1uQwiCbf454_m5kV71f-AHYZXzw3t2Nf64krImBj4IoZXPAHwPw7Q8-vQTOVDkN1VB6bNoNWChvFAXs5zDivP82D8qg";
         [Test]
         public void Test_GetPlaylist_WithOutUsingApiActions()
         {
@@ -17,7 +18,7 @@ namespace Spotify.Api.Test.Tests
                 Resource = "/v1/playlists/0wKWAFppD3ccUqg0AiuQLC"
             };
             request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", "Bearer BQBdNOQH-TgRjjpoK42FhS0elK2FWHy4bGGKmXNdLVtkMnQZtTgkwN_ZQvimeAH5GoSsy3H4DqOnxRIfbATi2XEQQjYuylC2eCkNQHU-PMTSbfmWeVxGCNwutvyDprguMDPY9wkTCtNZPAXJqvXDz-PY2REuXqxjF-euaYXjHd8I39fvw5snyelVHavbC6s-CBMkQ9cCAU0ClulF3h_xrrEjjA");
+            request.AddHeader("Authorization", $"Bearer {_accessToken}");
 
             var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
 
@@ -33,7 +34,7 @@ namespace Spotify.Api.Test.Tests
             // Act
             var response = new ApiActions().AddRequestUrl(requestUrl)
                                            .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", "Bearer BQBdNOQH-TgRjjpoK42FhS0elK2FWHy4bGGKmXNdLVtkMnQZtTgkwN_ZQvimeAH5GoSsy3H4DqOnxRIfbATi2XEQQjYuylC2eCkNQHU-PMTSbfmWeVxGCNwutvyDprguMDPY9wkTCtNZPAXJqvXDz-PY2REuXqxjF-euaYXjHd8I39fvw5snyelVHavbC6s-CBMkQ9cCAU0ClulF3h_xrrEjjA")
+                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
                                            .ExecuteGetMethod();
 
             // Assert
@@ -50,7 +51,7 @@ namespace Spotify.Api.Test.Tests
             // Act
             var response = new ApiActions().AddRequestUrl(requestUrl)
                                            .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", "Bearer BQBdNOQH-TgRjjpoK42FhS0elK2FWHy4bGGKmXNdLVtkMnQZtTgkwN_ZQvimeAH5GoSsy3H4DqOnxRIfbATi2XEQQjYuylC2eCkNQHU-PMTSbfmWeVxGCNwutvyDprguMDPY9wkTCtNZPAXJqvXDz-PY2REuXqxjF-euaYXjHd8I39fvw5snyelVHavbC6s-CBMkQ9cCAU0ClulF3h_xrrEjjA")
+                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
                                            .AddJsonStringBody(requestBody)
                                            .ExecutePostMethod();
 
@@ -68,7 +69,7 @@ namespace Spotify.Api.Test.Tests
             // Act
             var response = new ApiActions().AddRequestUrl(requestUrl)
                                            .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", "Bearer BQBdNOQH-TgRjjpoK42FhS0elK2FWHy4bGGKmXNdLVtkMnQZtTgkwN_ZQvimeAH5GoSsy3H4DqOnxRIfbATi2XEQQjYuylC2eCkNQHU-PMTSbfmWeVxGCNwutvyDprguMDPY9wkTCtNZPAXJqvXDz-PY2REuXqxjF-euaYXjHd8I39fvw5snyelVHavbC6s-CBMkQ9cCAU0ClulF3h_xrrEjjA")
+                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
                                            .AddJsonStringBody(requestBody)
                                            .ExecutePostMethod();
 
@@ -86,7 +87,7 @@ namespace Spotify.Api.Test.Tests
             // Act
             var response = new ApiActions().AddRequestUrl(requestUrl)
                                            .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", "Bearer BQBdNOQH-TgRjjpoK42FhS0elK2FWHy4bGGKmXNdLVtkMnQZtTgkwN_ZQvimeAH5GoSsy3H4DqOnxRIfbATi2XEQQjYuylC2eCkNQHU-PMTSbfmWeVxGCNwutvyDprguMDPY9wkTCtNZPAXJqvXDz-PY2REuXqxjF-euaYXjHd8I39fvw5snyelVHavbC6s-CBMkQ9cCAU0ClulF3h_xrrEjjA")
+                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
                                            .AddJsonStringBody(requestBody)
                                            .ExecuteDeleteMethod();
 
