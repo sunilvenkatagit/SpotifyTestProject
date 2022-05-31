@@ -10,7 +10,7 @@ namespace Spotify.Api.Test.Services
     {
         public static RestResponse Get(string playListId)
         {
-            return new ApiActions().AddRequestUrl($"{BASEURI}/{BASE_PATH}/{PLAYLISTS}/{playListId}")
+            return new ApiActions().AddRequestUrl($"{BASEURI}{BASE_PATH}{PLAYLISTS}/{playListId}")
                                    .AddHeader("Content-Type", "application/json")
                                    .AddHeader("Authorization", $"Bearer {TokenManager.GetAccessToken()}")
                                    .ExecuteGetMethod();
@@ -18,7 +18,7 @@ namespace Spotify.Api.Test.Services
 
         public static RestResponse Create(string userId, PlaylistRequest playList)
         {
-            return new ApiActions().AddRequestUrl($"{BASEURI}/{BASE_PATH}/{USERS}/{userId}/{PLAYLISTS}")
+            return new ApiActions().AddRequestUrl($"{BASEURI}{BASE_PATH}{USERS}/{userId}{PLAYLISTS}")
                                    .AddHeader("Content-Type", "application/json")
                                    .AddHeader("Authorization", $"Bearer {TokenManager.GetAccessToken()}")
                                    .AddJsonObjectBody(playList)
@@ -27,7 +27,7 @@ namespace Spotify.Api.Test.Services
 
         public static RestResponse AddNewTracks(string playListId, string lisOfTracks)
         {
-            return new ApiActions().AddRequestUrl($"{BASEURI}/{BASE_PATH}/{PLAYLISTS}/{playListId}/{TRACKS}")
+            return new ApiActions().AddRequestUrl($"{BASEURI}{BASE_PATH}{PLAYLISTS}/{playListId}{TRACKS}")
                                    .AddHeader("Content-Type", "application/json")
                                    .AddHeader("Authorization", $"Bearer {TokenManager.GetAccessToken()}")
                                    .AddJsonStringBody(lisOfTracks)
@@ -36,7 +36,7 @@ namespace Spotify.Api.Test.Services
 
         public static RestResponse RemoveTracks(string playListId, string lisOfTracks)
         {
-            return new ApiActions().AddRequestUrl($"{BASEURI}/{BASE_PATH}/{PLAYLISTS}/{playListId}/{TRACKS}")
+            return new ApiActions().AddRequestUrl($"{BASEURI}{BASE_PATH}{PLAYLISTS}/{playListId}{TRACKS}")
                                    .AddHeader("Content-Type", "application/json")
                                    .AddHeader("Authorization", $"Bearer {TokenManager.GetAccessToken()}")
                                    .AddJsonStringBody(lisOfTracks)

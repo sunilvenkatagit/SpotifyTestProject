@@ -18,6 +18,7 @@ namespace Spotify.Api.Test.Extensions
         }
         public static string Path(this RestResponse response, string jsonPath)
         {
+            // resource: https://www.newtonsoft.com/json/help/html/QueryJsonSelectToken.htm
             JObject obj = JObject.Parse(response.Content);
             return (string)obj.SelectToken(jsonPath);
         }

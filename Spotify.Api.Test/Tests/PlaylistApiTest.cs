@@ -3,6 +3,8 @@ using Spotify.Api.Test.Services;
 using Spotify.Api.Test.Extensions;
 using Spotify.Api.Test.Models.Response;
 using Spotify.Api.Test.Models.Request;
+using System;
+using Spotify.Api.Test.Utils;
 
 namespace Spotify.Api.Test.Tests
 {
