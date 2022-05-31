@@ -8,6 +8,7 @@ namespace Spotify.Api.Test.Utils
     {
         private static readonly IConfigurationRoot _configurationRoot;
 
+        #region Constructor
         static ConfigReader()
         {
             try
@@ -26,7 +27,9 @@ namespace Spotify.Api.Test.Utils
                 throw new ArgumentException("ABORT!!! Failed to load 'appsettings.json' file.");
             }
         }
+        #endregion Constructor
 
+        #region Properties
         public static string GrantType
         {
             get
@@ -88,5 +91,6 @@ namespace Spotify.Api.Test.Utils
                     throw new ArgumentException("property 'targetEnvironment' is not specified in the appSettings.json file");
             }
         }
+        #endregion Properties
     }
 }
