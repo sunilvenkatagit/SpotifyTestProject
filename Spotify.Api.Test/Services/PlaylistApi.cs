@@ -25,21 +25,21 @@ namespace Spotify.Api.Test.Services
                                    .ExecutePostMethod();
         }
 
-        public static RestResponse AddNewTracks(string playListId, string lisOfTracks)
+        public static RestResponse AddNewTracks(string playListId, TracksRequest lisOfTracks)
         {
             return new ApiActions().AddRequestUrl($"{BASEURI}{BASE_PATH}{PLAYLISTS}/{playListId}{TRACKS}")
                                    .AddHeader("Content-Type", "application/json")
                                    .AddHeader("Authorization", $"Bearer {TokenManager.GetAccessToken()}")
-                                   .AddJsonStringBody(lisOfTracks)
+                                   .AddJsonObjectBody(lisOfTracks)
                                    .ExecutePostMethod();
         }
 
-        public static RestResponse RemoveTracks(string playListId, string lisOfTracks)
+        public static RestResponse RemoveTracks(string playListId, TracksRequest lisOfTracks)
         {
             return new ApiActions().AddRequestUrl($"{BASEURI}{BASE_PATH}{PLAYLISTS}/{playListId}{TRACKS}")
                                    .AddHeader("Content-Type", "application/json")
                                    .AddHeader("Authorization", $"Bearer {TokenManager.GetAccessToken()}")
-                                   .AddJsonStringBody(lisOfTracks)
+                                   .AddJsonObjectBody(lisOfTracks)
                                    .ExecuteDeleteMethod();
         }
     }

@@ -5,6 +5,7 @@ using Spotify.Api.Test.Models.Response;
 using Spotify.Api.Test.Models.Request;
 using Spotify.Api.Test.Data;
 using Spotify.Api.Test.Api;
+using System.Collections.Generic;
 
 namespace Spotify.Api.Test.Tests
 {
@@ -48,28 +49,35 @@ namespace Spotify.Api.Test.Tests
         {
             // Arrange
             var playListId = TestData.GetPlaylistId;
-            var listOfTracks = "{\"uris\":[\"spotify:track:4ws4fIFJDtQAjNQ53KYVl2\"]}";
+            var listOfTracks = new TracksRequest()
+            {
+                Uris = new List<string>() { "spotify:track:4ws4fIFJDtQAjNQ53KYVl2" }
+            };
 
             // Act
             var response = PlaylistApi.AddNewTracks(playListId, listOfTracks);
 
             // Assert
-            Assert.AreEqual((int)response.StatusCode, 201);
+            AssertStatusCode(StatusCode.Code_201, response.GetStatusCode());
         }
         [Test]
         public void Test_ShouldBeAbleToRemoveTracksFromAPlaylist()
         {
             // Arrange
             var playListId = TestData.GetPlaylistId;
-            var listOfTracks = "{\"uris\":[\"spotify:track:4wANB882g1ZhF2V8ugksY1\"]}";
+            var listOfTracks = new TracksRequest()
+            {
+                Uris = new List<string>() { "spotify:track:4wANB882g1ZhF2V8ugksY1" }
+            };
 
             // Act
             var response = PlaylistApi.RemoveTracks(playListId, listOfTracks);
 
             // Assert
-            Assert.AreEqual((int)response.StatusCode, 200);
+            AssertStatusCode(StatusCode.Code_200, response.GetStatusCode());
         }
 
+        #region Local Methods
         private static void AssertStatusCode(int expected, int actualCode)
         {
             Assert.AreEqual(expected, actualCode);
@@ -84,5 +92,6 @@ namespace Spotify.Api.Test.Tests
             Assert.AreEqual(playlistResponse.Description, playlistRequest.Description);
             Assert.AreEqual(playlistResponse.Public, playlistRequest.Public);
         }
+        #endregion Local Methods
     }
 }
