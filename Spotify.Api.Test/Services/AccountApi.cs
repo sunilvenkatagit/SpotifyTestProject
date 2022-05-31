@@ -12,7 +12,7 @@ namespace Spotify.Api.Test.Services
             return new ApiActions().AddRequestUrl($"{ACCOUNTBASEURI}{API}{TOKEN}")
                                    .AddHeader("Content-Type", "application/x-www-form-urlencoded")
                                    .AddParameters(requestParams)
-                                   .ExecutePostMethod();
+                                   .ExecutePostMethod(null, null);
         }
     }
 }
