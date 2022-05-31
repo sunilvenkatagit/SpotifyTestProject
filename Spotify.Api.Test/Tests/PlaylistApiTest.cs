@@ -1,98 +1,86 @@
 ﻿using NUnit.Framework;
-using RestSharp;
-using TestAutomationFramework.Actions;
+using Spotify.Api.Test.Services;
+using Spotify.Api.Test.Extensions;
+using Spotify.Api.Test.Models.Response;
+using Spotify.Api.Test.Models.Request;
 
 namespace Spotify.Api.Test.Tests
 {
+    [Category("PlaylistApiTest")]
     public class PlaylistApiTest
     {
-        private string _accessToken = "BQDv4BY4LrYvgCVaDdtQhQ-1aX-kJcQfUAopPUBP9BrcGq0vyIgorRkcAvoaq8scGBjxey8zwQVE699XKrHWvzKaHWXiU3yAOWuE4pz_qeaMx895x8XyJziNucbVd7U1uQwiCbf454_m5kV71f-AHYZXzw3t2Nf64krImBj4IoZXPAHwPw7Q8-vQTOVDkN1VB6bNoNWChvFAXs5zDivP82D8qg";
-        [Test]
-        public void Test_GetPlaylist_WithOutUsingApiActions()
-        {
-            var client = new RestClient("https://api.spotify.com");
-
-            var request = new RestRequest
-            {
-                Method = Method.Get,
-                Resource = "/v1/playlists/0wKWAFppD3ccUqg0AiuQLC"
-            };
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("Authorization", $"Bearer {_accessToken}");
-
-            var response = client.ExecuteAsync(request).GetAwaiter().GetResult();
-
-            System.Console.WriteLine(response.Content);
-        }
-
         [Test]
         public void Test_ShouldBeAbleToGetAPlaylist()
         {
             // Arrange
-            var requestUrl = "https://api.spotify.com/v1/playlists/0wKWAFppD3ccUqg0AiuQLC";
+            var playListId = "0wKWAFppD3ccUqg0AiuQLC";
 
             // Act
-            var response = new ApiActions().AddRequestUrl(requestUrl)
-                                           .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
-                                           .ExecuteGetMethod();
+            var response = PlaylistApi.Get(playListId);
 
             // Assert
-            Assert.AreEqual((int)response.StatusCode, 200);
-        }
+            System.Console.WriteLine("--------------");
+            System.Console.WriteLine(response.Path("external_urls.spotify"));
+            System.Console.WriteLine(response.Path("images[0].height"));
 
+            Assert.AreEqual((int)response.StatusCode, 200);
+            AssertPlaylist(response.ExtractAs<PlaylistResponse>());
+        }
         [Test]
         public void Test_ShouldBeAbleToCreateAPlaylist()
         {
             // Arrange
-            var requestUrl = "https://api.spotify.com/v1/users/pvsunil1993/playlists";
-            var requestBody = "{  \"name\": \"New Playlist 3\",  \"description\": \"Aaa New playlist description\",  \"public\": false}";
+            var userId = "pvsunil1993";
+            var playListRequest = new PlaylistRequest()
+            {
+                Name = "fdgghh",
+                Description = "htht",
+                Public = false
+            };
 
-            // Act
-            var response = new ApiActions().AddRequestUrl(requestUrl)
-                                           .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
-                                           .AddJsonStringBody(requestBody)
-                                           .ExecutePostMethod();
+            // Act            
+            var response = PlaylistApi.Create(userId, playListRequest);
 
             // Assert
             Assert.AreEqual((int)response.StatusCode, 201);
+            AssertPlaylist(response.ExtractAs<PlaylistResponse>(), playListRequest);
         }
-
         [Test]
         public void Test_ShouldBeAbleToAddTracksToAPlaylist()
         {
             // Arrange
-            var requestUrl = "https://api.spotify.com/v1/playlists/6gwYvbwDsJRlCl78VzZ1rH/tracks";
-            var requestBody = "{\"uris\":[\"spotify:track:4ws4fIFJDtQAjNQ53KYVl2\"]}";
+            var playListId = "0wKWAFppD3ccUqg0AiuQLC";
+            var listOfTracks = "{\"uris\":[\"spotify:track:4ws4fIFJDtQAjNQ53KYVl2\"]}";
 
             // Act
-            var response = new ApiActions().AddRequestUrl(requestUrl)
-                                           .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
-                                           .AddJsonStringBody(requestBody)
-                                           .ExecutePostMethod();
+            var response = PlaylistApi.AddNewTracks(playListId, listOfTracks);
 
             // Assert
             Assert.AreEqual((int)response.StatusCode, 201);
         }
-
         [Test]
         public void Test_ShouldBeAbleToRemoveTracksFromAPlaylist()
         {
             // Arrange
-            var requestUrl = "https://api.spotify.com/v1/playlists/6gwYvbwDsJRlCl78VzZ1rH/tracks";
-            var requestBody = "{\"uris\":[\"spotify:track:4wANB882g1ZhF2V8ugksY1\"]}";
+            var playListId = "0wKWAFppD3ccUqg0AiuQLC";
+            var listOfTracks = "{\"uris\":[\"spotify:track:4wANB882g1ZhF2V8ugksY1\"]}";
 
             // Act
-            var response = new ApiActions().AddRequestUrl(requestUrl)
-                                           .AddHeader("Content-Type", "application/json")
-                                           .AddHeader("Authorization", $"Bearer {_accessToken}")
-                                           .AddJsonStringBody(requestBody)
-                                           .ExecuteDeleteMethod();
+            var response = PlaylistApi.RemoveTracks(playListId, listOfTracks);
 
             // Assert
             Assert.AreEqual((int)response.StatusCode, 200);
+        }
+
+        public static void AssertPlaylist(PlaylistResponse playlistResponse)
+        {
+            Assert.AreEqual(playlistResponse.Id, "0wKWAFppD3ccUqg0AiuQLC");
+        }
+        public static void AssertPlaylist(PlaylistResponse playlistResponse, PlaylistRequest playlistRequest)
+        {
+            Assert.AreEqual(playlistResponse.Name, playlistRequest.Name);
+            Assert.AreEqual(playlistResponse.Description, playlistRequest.Description);
+            Assert.AreEqual(playlistResponse.Public, playlistRequest.Public);
         }
     }
 }
