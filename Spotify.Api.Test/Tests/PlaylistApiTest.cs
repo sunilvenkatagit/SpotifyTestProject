@@ -40,7 +40,7 @@ namespace Spotify.Api.Test.Tests
             var response = PlaylistApi.Create(userId, playListRequest);
 
             // Assert
-            //AssertStatusCode(StatusCode.Code_201, response.GetStatusCode());
+            AssertStatusCode(StatusCode.Code_201, response.GetStatusCode());
             AssertPlaylist(response.ExtractAs<PlaylistResponse>(), playListRequest);
         }
         [Test]
