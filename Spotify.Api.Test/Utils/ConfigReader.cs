@@ -75,5 +75,18 @@ namespace Spotify.Api.Test.Utils
                     throw new ArgumentException("property 'refresh_token' is not specified in the appSettings.json file");
             }
         }
+
+        public static string TargetEnvironment
+        {
+            get
+            {
+                var client_id = _configurationRoot.GetSection("TestRunSettings").GetSection("targetEnvironment").Value;
+
+                if (client_id != null)
+                    return client_id;
+                else
+                    throw new ArgumentException("property 'targetEnvironment' is not specified in the appSettings.json file");
+            }
+        }
     }
 }

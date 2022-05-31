@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TestAutomationFramework.Actions;
 using Spotify.Api.Test.Extensions;
-using static Spotify.Api.Test.Api.Route;
 using Spotify.Api.Test.Utils;
+using Spotify.Api.Test.Services;
+using System;
 
 namespace Spotify.Api.Test.Api
 {
@@ -10,7 +10,6 @@ namespace Spotify.Api.Test.Api
     {
         public static string GetAccessToken()
         {
-            var account_uri = "https://accounts.spotify.com";
             var requestParams = new Dictionary<string, string>()
             {
                 { "grant_type", ConfigReader.GrantType},
@@ -19,10 +18,10 @@ namespace Spotify.Api.Test.Api
                 { "refresh_token", ConfigReader.RefreshToken}
             };
 
-            var response = new ApiActions().AddRequestUrl($"{account_uri}{API}{TOKEN}")
-                                           .AddHeader("Content-Type", "application/x-www-form-urlencoded")
-                                           .AddParameters(requestParams)
-                                           .ExecutePostMethod();
+            var response = AccountApi.Post(requestParams);
+
+            if ((int)response.StatusCode != 200)
+                throw new ArgumentException("ABORT!!! Renew Token failed");
 
             return response.Path("access_token");
         }
