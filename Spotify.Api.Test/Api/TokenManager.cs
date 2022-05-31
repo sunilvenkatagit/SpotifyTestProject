@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Spotify.Api.Test.Extensions;
+using TestAutomationFramework.Extensions;
 using Spotify.Api.Test.Utils;
 using Spotify.Api.Test.Services;
 using System;

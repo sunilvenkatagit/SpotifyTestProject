@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using Spotify.Api.Test.Services;
-using Spotify.Api.Test.Extensions;
+using TestAutomationFramework.Extensions;
 using Spotify.Api.Test.Models.Response;
 using Spotify.Api.Test.Models.Request;
 
